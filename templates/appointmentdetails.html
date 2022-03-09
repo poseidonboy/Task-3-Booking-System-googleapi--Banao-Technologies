@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+        <a class="navbar-brand">Patient Dashboard</a> 
+        <a class="btn btn-outline-info" aria-current="page" href="{% url 'logout' %}">logout</a>
+        </div>
+    </nav>
+    <div class="container mt-5">
+       
+        <div class="col-sm-10">
+            <div class="card-header alert alert-warning text-center offset-2 ">
+                <h3><b>Appointment Confirmed Successfully!!!!!</b> </h3>
+            </div>
+            <div class="card offset-2">
+                <div class="card-body">
+                   <div class="container offset-3">
+                        <div class="row">
+                            <p text-muted small>Doctor Name: <strong>{{dname}}</strong></p><br>
+                        </div>
+                        <div class="row">
+                            <p text-muted small>Appointment Date: <strong>{{date}}</strong></p><br>
+                        </div>
+                        <div class="row">
+                            <p text-muted small>Appointment start time: <strong>{{time}}</strong></p><br>
+                        </div>
+                        <div class="row">
+                            <p text-muted small>Appointment end time: <strong>{{endtime}}</strong></p><br>
+                        </div>
+                   </div>
+                </div>
+                <br>
+                <a href="{% url 'dashboardpat' %}">Back to Home</a>
+            </div>
+        </div>    
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,25 @@
+<form action="" method="post"> 
+    <div class="container">
+        <div class="col-sm-9">
+            <div class="card offset-2">
+                <div class="card-header bg-dark text-white">
+                <b>Appointment</b> 
+                </div>
+                <div class="card-body">
+                    <form action="" method="POST" novalidate>
+                        {% for f in fm.visible_fields %}
+                            <p>{{f.label_tag}}{{f}} <span>{{f.errors|striptags}}</span></p>
+                        {% endfor %}  
+                        {% for f in fm.hidden_fields %}
+                            {{f}} 
+                        {% endfor %}
+                       {% comment %} <a href="{% url 'confirmpage' %}" type="submit" class="btn btn-success float-end">confirm</a> {% endcomment %}
+                       <input type="submit" name="confm" class="btn btn-success float-end" value="confirm"> 
+                       <p hidden class="usrname" id=""></p>
+                    </form>        
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</form>

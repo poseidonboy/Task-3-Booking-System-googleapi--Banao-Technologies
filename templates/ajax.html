@@ -1,0 +1,107 @@
+<script>
+    {% comment %} function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue; 
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    $('#postsubmit').submit(function(e){
+        e.preventDefault();
+        $form = $(this)
+        var formData = new FormData(this);
+        console.log(formData)
+        $.ajax({
+            mimeType:"multipart/form-data",
+            url: {% url 'dashboarddoc' %},
+            type: "POST",
+            {% comment %} contentType: false,
+            processData: false, {% endcomment %}
+            {% comment %} data: {
+                name: formData,
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            },
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }) {% endcomment %}
+
+    const alertBox = document.getElementById('alert-box')
+    const imgBox = document.getElementById('img-box')
+    const form = document.getElementById('p-form')
+    
+    const title = document.getElementById('title')
+    const postimg = document.getElementById('id_postimg')
+    const categories = document.getElementById('choicecat')
+    const summary = document.getElementById('summary')
+    const content = document.getElementById('content')
+    const is_draft = document.getElementById('id_is_draft')
+    
+    const csrf = document.getElementsByName('csrfmiddlewaretoken')
+    console.log(csrf)
+    
+    const url = ""
+    
+    const handleAlerts = (type, text) =>{
+        alertBox.innerHTML = `<div class="alert alert-${type}" role="alert">
+                                ${text}
+                            </div>`
+    }
+    
+    form.addEventListener('submit', e=>{
+        e.preventDefault()
+    
+        const fd = new FormData()
+        fd.append('csrfmiddlewaretoken', csrf[0].value)
+        fd.append('title', title.value)
+        fd.append('postimg', postimg.files[0])
+        fd.append('categories', categories.value)
+        fd.append('summary', summary.value)
+        fd.append('content', content.value)
+        fd.append('is_draft', is_draft.value)
+    
+        $.ajax({
+            type: 'POST',
+            url: url,
+            enctype: 'multipart/form-data',
+            data: fd,
+            success: function(response){
+                console.log(response)
+                const sText = `successfully saved ${response.name}`
+                handleAlerts('success', sText)
+                setTimeout(()=>{
+                    alertBox.innerHTML = ""
+                    imgBox.innerHTML = ""
+                    name.value = ""
+                    description.value = ""
+                    image.value = ""
+                }, 3000)
+            },
+            error: function(error){
+                console.log(error)
+                handleAlerts('danger', 'ups..something went wrong')
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        })
+    })
+
+  
+</script>

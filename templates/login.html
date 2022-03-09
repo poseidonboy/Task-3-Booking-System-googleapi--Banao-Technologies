@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="alert alert-warning text-center">Welcome</h1>
+        <div class="col-sm-9">
+            {% for message in messages %}
+                <span class="offset-6 alert alert-success"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+            {% endfor %}
+            <div class="card offset-4">
+                <div class="card-header bg-dark text-white">
+                <b>Login</b> 
+                </div>
+                <div class="card-body">
+                    <form action="" method="POST" novalidate>
+                        {% for fm in form %}
+                            {% csrf_token %}
+                            <p>{{fm.label_tag}}{{fm}} <span>{{fm.errors|striptags}}</span></p>
+                        {% endfor %}  
+                        <input class="btn btn-success" type="submit" value="Login">  
+                    </form>
+                    <br>
+                   <p>Are you a new user? Sign up <a href="{% url 'signup' %}">here</a></p>
+                </div>
+            </div>
+        </div>    
+    </div>
+{% endblock content %}

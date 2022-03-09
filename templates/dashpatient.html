@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+        <a class="navbar-brand">Patient Dashboard</a> 
+        <a class="btn btn-outline-info" aria-current="page" href="{% url 'logout' %}">logout</a>
+        </div>
+    </nav>
+    <div class="container">
+
+    </div>
+    <div class="container-fluid conmargin">
+      <div class="row g-0">
+        <div class="col-sm-3">
+            <div class="row">
+              <div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-white sidecolor" style="width: 285px;"> <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"> <svg class="bi me-2" width="40" height="20"> </svg> <span class="fs-4">Categories</span> </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto" id="navMenus">
+                  <li class="nav-item"> <a class="nav-link  text-white" id="mhbtn"><span class="ms-2" >Mental Health</span> </a> </li>
+                  <li class="nav-item"> <a class="nav-link  text-white" id="hdbtn"> <span class="ms-2">Heart Disease</span> </a> </li>
+                  <li class="nav-item"> <a class="nav-link  text-white" id="covbtn"><span class="ms-2">Covid19</span> </a> </li>
+                  <li class="nav-item"> <a class="nav-link text-white" id="izbtn"><span class="ms-2">Immunization</span> </a> </li>
+                  <hr>
+                  <li class="nav-item"> <a class="nav-link text-white" id="booking"><span class="ms-2">Booking</span> </a> </li>
+                </ul>
+              </div> 
+            </div>
+        </div>
+        <div class="col-sm-9 mt-4" id="wholeID"> 
+            <div><h5 class="text-muted" id="catid">Mental Health</h5></div><hr>
+            <div class="row" id="orifm">
+              <div class="col-sm-11">
+                <p id="newpst"></p> 
+                <div id="disID">
+                  {% if dt %}
+                  {% for d in dt %}
+                      <p>
+                        <div class="card" >                     
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-2 padding-0">
+                                <img class="card-img imgdimen" src="{{d.postimg.url}}" alt="Card image cap">
+                              </div>
+                              <div class="col-10 padding-0">
+                                <h5 class="card-title"><a class="psttitle" href="{% url 'viewpost' d.id %}">{{d.title}}</a></h5>
+                                <p class="summry">{{d.summary|truncatewords:15}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </p>  
+                  {% endfor %}
+                  {% else %}
+                      <p>No posts</p>
+                {% endif %}            
+                </div>
+
+
+              </div>
+
+               
+            </div>
+          
+        </div>
+        
+      </div>
+    </div>
+    <template id="postcontent">          
+      <p>
+        <div class="card" >                     
+          <div class="card-body">
+            <div class="row">
+              <div class="col-2 padding-0">
+                <img class="card-img imgdimen" src="" alt="Card image cap">
+              </div>
+              <div class="col-10 padding-0">
+                <h5 class="card-title"><a class="psttitle" href="#"></a></h5>
+                <p class="summry"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p>           
+</template>
+
+<template id="usrlist">   
+    <p>
+      <table class="table" style="width: 750px;">
+        <tbody>
+          <tr> 
+            <td>
+                <div class="p-2 d-flex flex-row align-items-center mb-2"> <img src="" class="rounded-circle imgdimen" style="width: 60px; height:60px">
+                    <div class="d-flex flex-column ml-2 ms-2"> <span class="d-block font-weight-bold psttitle"></span> <small class="text-muted">(Doctor)</small> </div>
+                </div>
+            </td>
+            <td>
+                <div class="p-2 float-end offset-me-4"> <span><button class="btn btn-warning appoint">Book Appointment</button></span></div>
+            </td>
+        
+          </tr>
+        </tbody>
+      </table>
+    </p>
+
+</template>
+
+<template id="appointfm">          
+  <p>
+    <div class="card" >                     
+      <div class="card-body">
+        <div class="row">
+          <div class="col-5 padding-0">
+              <p id="appfm"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p>           
+</template>
+    
+  
+  <script src="{% static 'js/jquery.js' %}"></script>
+  <script src="{% static 'js/patientajax.js' %}"></script>
+{% endblock content %}

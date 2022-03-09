@@ -1,0 +1,28 @@
+.gradient-custom {
+    /* fallback for old browsers */
+   background-color: black;
+  }
+
+.imgdimen {
+    width: 80px;
+    height: 75px;
+}
+
+.blogimg {
+    display: block;
+    width: 800px;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nav-link:hover {
+    background-color: #525252 !important
+}
+
+.conmargin { padding: 0;}
+
+
+.sidecolor{
+    background-color: #737373;
+}

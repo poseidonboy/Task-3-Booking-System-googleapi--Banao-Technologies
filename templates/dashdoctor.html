@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+          <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+            <a class="navbar-brand">Doctor Dashboard</a> 
+            <a class="btn btn-outline-info" aria-current="page" href="{% url 'logout' %}">logout</a>
+            </div>
+          </nav>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-5 padding-0">
+                <div class="container-fluid mt-3">
+                  <div class="card">
+                    <div class="card-header bg-dark text-white">
+                    <b>Post</b> 
+                    </div>
+                    <div class="card-body">
+                        <div id="msgbox"></div>
+                        <form action="" id="p-form" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% for fm in form %}
+                                {% csrf_token %}
+                                <p>{{fm.label_tag}}{{fm}} <span>{{fm.errors|striptags}}</span></p>
+                            {% endfor %}  
+                            
+                            <input class="btn btn-success btn-sm" type="submit" value="Post"> 
+                        </form>
+                        
+                        <br>
+                    </div>
+                    </div>
+                </div>
+                
+              </div>
+              <div class="col-sm-7 mt-3 padding-0">
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Mental Health
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <p id="mhnew"></p>
+                        
+                        {% if postMH %}
+                              {% for mh in postMH reversed %}
+                              <p>
+                                <div class="card" >                     
+                                  <div class="card-body">
+                                    <div class="row">
+                                      <div class="col-sm-11">
+                                        <div class="row">
+                                          <div class="col-sm-2 padding-0">
+                                            <img class="card-img imgdimen" src="{{mh.postimg.url}}" alt="Card image cap">
+                                          </div>
+                                          <div class="col-sm-10 padding-0">
+                                            <h5 class="card-title"><a href="{% url 'viewpost' mh.id %}">{{mh.title}}</a></h5>
+                                            <p class="card-text">{{mh.summary|truncatewords:15}}</p>
+                                          </div>
+                                        </div>
+                                       
+                                      </div>
+                                      <div class="col-sm-1">
+                            
+                                        
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </p> 
+                          {% endfor %}  
+                        {% else %}
+                            <h6 class="text-center" id="nopostmh">no posts</h6>
+                        {% endif %}                                              
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                      <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Heart Diseases
+                      </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">  
+                        <p id="hdnew"></p>   
+                        {% if postHD %}
+                        {% for hd in postHD reversed %}
+                        <p>
+                          <div class="card" >                     
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-sm-2 padding-0">
+                                  <img class="card-img imgdimen" src="{{hd.postimg.url}}" alt="Card image cap">
+                                </div>
+                                <div class="col-sm-10 padding-0">
+                                  <h5 class="card-title"><a href="{% url 'viewpost' hd.id %}">{{hd.title}}</a></h5>
+                                  <p class="card-text">{{hd.summary|truncatewords:15}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </p> 
+                    {% endfor %}  
+                  {% else %}
+                      <h6 class="text-center" id="noposthd">no posts</h6>
+                  {% endif %}  
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                      <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Covid 19
+                      </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                          <p id="cdnew"></p>                     
+                          {% if postC19 %}
+                            {% for cd in postC19 reversed %}
+                            <p>
+                              <div class="card" >                     
+                                <div class="card-body">
+                                  <div class="row">
+                                    <div class="col-2 padding-0">
+                                      <img class="card-img imgdimen" src="{{cd.postimg.url}}" alt="Card image cap">
+                                    </div>
+                                    <div class="col-10 padding-0">
+                                      <h5 class="card-title"><a href="{% url 'viewpost' cd.id %}">{{cd.title}}</a></h5>
+                                      <p class="card-text">{{cd.summary|truncatewords:15}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </p> 
+                            {% endfor %}  
+                            {% else %}
+                              <h6 class="text-center" id="nopostcd">no posts</h6>
+                        {% endif %} 
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                      <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Immunization
+                      </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                          <p id="iznew"></p>
+                          {% if postIZ %}
+                            {% for iz in postIZ reversed %}
+                            <p>
+                              <div class="card" >                     
+                                <div class="card-body">
+                                  <div class="row">
+                                    <div class="col-2 padding-0">
+                                      <img class="card-img imgdimen" src="{{iz.postimg.url}}" alt="Card image cap">
+                                    </div>
+                                    <div class="col-10 padding-0">
+                                      <h5 class="card-title"><a href="{% url 'viewpost' iz.id %}">{{iz.title}}</a></h5>
+                                      <p class="card-text">{{iz.summary|truncatewords:15}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </p> 
+                            {% endfor %}  
+                          {% else %}
+                            <h6 class="text-center" id="nopostiz">no posts</h6>
+                          {% endif %} 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <template id="postcontent">          
+              <p>
+                <div class="card" >                     
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-2 padding-0">
+                        <img class="card-img imgdimen" src="" alt="Card image cap">
+                      </div>
+                      <div class="col-10 padding-0">
+                        <h5 class="card-title"><a class="psttitle" href="#"></a></h5>
+                        <p class="summry"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </p>           
+        </template>
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/ajax.js' %}"></script>
+      
+{% endblock content %}
